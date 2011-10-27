@@ -8,7 +8,8 @@ class TestCompiler(unittest.TestCase):
 
     marks = ('# First-level heading #####\n','## Second-level heading\n',
                     '### Third-level heading\n','#### Forth-level heading\n',
-                    '##### Fifth-level heading\n','###### Sixth-level heading\n')
+                    '##### Fifth-level heading\n','###### Sixth-level heading\n',
+                    '*emphasis*', '_emphasis_')
 
     def setUp(self):
         """Write a file with all syntax"""
@@ -25,33 +26,54 @@ class TestCompiler(unittest.TestCase):
 
     def testConvertH1Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[0])
-        self.assertEqual(test,"<h1> First-level heading </h1>", "Line not converted correctly")
-
+        test = c.atx_headers(self.marks[0])
+        self.assertEqual(test,"<h1> First-level heading </h1>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[0], test))
     def testConvertH2Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[1])
-        self.assertEqual(test,"<h2> Second-level heading </h2>", "Line not converted correctly")
-
+        test = c.atx_headers(self.marks[1])
+        self.assertEqual(test,"<h2> Second-level heading </h2>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[1], test))
+ 
     def testConvertH3Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[2])
-        self.assertEqual(test,"<h3> Third-level heading </h3>", "Line not converted correctly")
-
+        test = c.atx_headers(self.marks[2])
+        self.assertEqual(test,"<h3> Third-level heading </h3>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[2], test))
+    
     def testConvertH4Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[3])
-        self.assertEqual(test,"<h4> Forth-level heading </h4>", "Line not converted correctly")
-
+        test = c.atx_headers(self.marks[3])
+        self.assertEqual(test,"<h4> Forth-level heading </h4>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[3], test))
+ 
     def testConvertH5Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[4])
-        self.assertEqual(test,"<h5> Fifth-level heading </h5>", "Line not converted correctly")
-
+        test = c.atx_headers(self.marks[4])
+        self.assertEqual(test,"<h5> Fifth-level heading </h5>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[4], test))
+ 
     def testConvertH6Hash(self):
         c = Compiler()
-        test = c.headers(self.marks[5])
-        self.assertEqual(test,"<h6> Sixth-level heading </h6>", "Line not converted correctly")
+        test = c.atx_headers(self.marks[5])
+        self.assertEqual(test,"<h6> Sixth-level heading </h6>", 
+                                "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
+                                (self.marks[5], test))
+ 
+    def testEmphasisAsk(self):
+        c = Compiler()
+        test = c.emphasis(self.marks[6])
+        self.assertEqual(test,"<em>emphasis</em>", "Line not converted correctly")
+
+    def testEmphasisUnder(self):
+        c = Compiler()
+        test = c.emphasis(self.marks[7])
+        self.assertEqual(test,"<em>emphasis</em>", "Line not converted correctly")
 
     def tearDown(self):
         os.remove('test.txt')

@@ -12,37 +12,41 @@ class Compiler:
         
         return line
     
-    def headers(self, line):
+    def atx_headers(self, line):
         """ Convert hashes to <h?> tags """
 
         line = self.strip_end(line)
 
-        if '###### ' in line:
+        if line.startswith('###### '):
             line = line.replace("###### ","<h6> ")      
             line = line + " </h6>"
             return line 
-        elif '##### ' in line:
+        elif line.startswith('##### '):
             line = line.replace("##### ","<h5> ")      
             line = line + " </h5>"
             return line 
-        elif '#### ' in line:
+        elif line.startswith('#### '):
             line = line.replace("#### ","<h4> ")      
             line = line + " </h4>"
             return line 
-        elif '### ' in line:
+        elif line.startswith('### '):
             line = line.replace("### ","<h3> ")      
             line = line + " </h3>"
             return line 
-        elif '## ' in line:
+        elif line.startswith('## '):
             line = line.replace("## ","<h2> ")      
             line = line + " </h2>"
             return line 
-        elif '# ' in line:
+        elif line.startswith('# '):
             line = line.replace("# ","<h1> ")      
             line = line + " </h1>"
             return line 
         else:  
             pass
+
+    def emphasis_ask(self, line):
+        """ Convert * and _ to <em> """
+        pass
  
 if __name__ == '__main__':
     c = Compiler()
