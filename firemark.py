@@ -1,5 +1,18 @@
-class Compiler:
+class Parser: 
+  
+    def val_line(self):
+        pass
+  
+    def push_stack(self, stack, line):
+        """ Add a line to the stack """
+        stack = stack.append(line)
+        return stack
 
+    def clear_stack(self, stack):
+        """ reset the stack to an empty list """
+        stack = []
+        return stack 
+    
     def strip_end(self, line):
         """Strip spaces from lines and remove hashes from the end"""
         
