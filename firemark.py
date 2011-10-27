@@ -1,8 +1,10 @@
 class Parser: 
-  
-    def val_line(self):
+
+    stack = []
+ 
+    def val_stack(self, stack):
         pass
-  
+ 
     def push_stack(self, stack, line):
         """ Add a line to the stack """
         stack = stack.append(line)
@@ -57,9 +59,44 @@ class Parser:
         else:  
             pass
 
-    def emphasis_ask(self, line):
+    def emphasis(self, line):
         """ Convert * and _ to <em> """
-        pass
+        line = self.strip_end(line)
+        ct = 0
+
+        while '**' in line:
+            if ct == 0: 
+                line = line.replace("**", "<em>", 1)
+                ct += 1
+            else:
+                line = line.replace("**", "</em>", 1)
+                ct = 0
+        
+        while '__' in line:
+            if ct == 0: 
+                line = line.replace("__", "<em>", 1)
+                ct += 1
+            else:
+                line = line.replace("__", "</em>", 1)
+                ct = 0
+
+        while '*' in line:
+            if ct == 0: 
+                line = line.replace("*", "<em>", 1)
+                ct += 1
+            else:
+                line = line.replace("*", "</em>", 1)
+                ct = 0
+        
+        while '_' in line:
+            if ct == 0: 
+                line = line.replace("_", "<em>", 1)
+                ct += 1
+            else:
+                line = line.replace("_", "</em>", 1)
+                ct = 0
+            
+        return line
  
 if __name__ == '__main__':
     c = Compiler()

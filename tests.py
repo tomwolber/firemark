@@ -9,7 +9,7 @@ class TestParser(unittest.TestCase):
     marks = ('# First-level heading #####\n','## Second-level heading\n',
                     '### Third-level heading\n','#### Forth-level heading\n',
                     '##### Fifth-level heading\n','###### Sixth-level heading\n',
-                    '*emphasis*', '_emphasis_')
+                    '*foo* bam baz *bat* **bash**', '_foo_ bar __bam__ _baz_')
     
     stack = ['one', 'two', 'three']
 
@@ -80,12 +80,12 @@ class TestParser(unittest.TestCase):
     def testEmphasisAsk(self):
         c = Parser()
         test = c.emphasis(self.marks[6])
-        self.assertEqual(test,"<em>emphasis</em>", "Line not converted correctly")
+        self.assertEqual(test,"<em>foo</em> bam baz <em>bat</em> <em>bash</em>", test)
 
     def testEmphasisUnder(self):
         c = Parser()
         test = c.emphasis(self.marks[7])
-        self.assertEqual(test,"<em>emphasis</em>", "Line not converted correctly")
+        self.assertEqual(test,"<em>foo</em> bar <em>bam</em> <em>baz</em>", test)
 
     def tearDown(self):
         os.remove('test.txt')
