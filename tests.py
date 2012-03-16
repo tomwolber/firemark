@@ -11,7 +11,9 @@ class TestParser(unittest.TestCase):
                     '##### Fifth-level heading\n','###### Sixth-level heading\n',
                     '*foo* bam baz *bat* **bash**', '_foo_ bar __bam__ _baz_')
     
-    stack = ['one', 'two', 'three']
+
+    lines = ('\n','foo', '\n', 'bar')
+
 
     def setUp(self):
         """Write a file with all syntax"""
@@ -21,16 +23,16 @@ class TestParser(unittest.TestCase):
             f.write(mark)
         f.close()
 
-    def testAddToStack(self):
+    def testAddToBlock(self):
         c = Parser()
-        c.push_stack(self.stack, 'four')
-        self.assertEqual(self.stack,['one', 'two', 'three', 'four'],self.stack)
+        
+        block  = ['one', 'two', 'three']
+       
+        for line in self.lines:
+            c.build_block(block, line) 
+  
+        self.assertEqual(block,['one', 'two', 'three', 'foo', 'bar'],block)
  
-    def testClearStack(self):
-        c = Parser()
-        test = c.clear_stack(self.stack) 
-        self.assertEqual(test,[],"Stack not cleared correctly")
-            
     def testRemoveHash(self):
         c = Parser()
         test = c.strip_end(self.marks[0])
@@ -76,7 +78,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(test,"<h6> Sixth-level heading </h6>", 
                                 "\nLine not converted correctly\nInput: %s\nOutput: %s" % 
                                 (self.marks[5], test))
- 
+
     def testEmphasisAsk(self):
         c = Parser()
         test = c.emphasis(self.marks[6])

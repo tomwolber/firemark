@@ -1,20 +1,14 @@
 class Parser: 
 
     stack = []
- 
-    def val_stack(self, stack):
-        pass
- 
-    def push_stack(self, stack, line):
-        """ Add a line to the stack """
-        stack = stack.append(line)
-        return stack
-
-    def clear_stack(self, stack):
-        """ reset the stack to an empty list """
-        stack = []
-        return stack 
     
+    stack_ct = 0
+ 
+    def build_block(self, block, line, stack_ct):
+        block = self.stack[stack_ct]
+                        
+        self.stack_ct += 1
+
     def strip_end(self, line):
         """Strip spaces from lines and remove hashes from the end"""
         
@@ -97,6 +91,10 @@ class Parser:
                 ct = 0
             
         return line
+
+
+    def process_block(self):
+        pass
  
 if __name__ == '__main__':
     c = Compiler()
